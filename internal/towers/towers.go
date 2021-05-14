@@ -1,5 +1,9 @@
 package towers
 
+import (
+	"github.com/jtbonhomme/ganoi/internal/bases"
+)
+
 const (
 	TowerHeight int = 6
 	TowerWidth  int = 30
@@ -9,5 +13,5 @@ const (
 type Tower struct {
 	Name  string
 	Pos   int
-	Bases []int
+	Bases []*bases.Base
 }
