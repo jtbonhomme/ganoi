@@ -1,7 +1,11 @@
 package game
 
 import (
+	"errors"
+	"fmt"
+
 	tl "github.com/JoelOtter/termloop"
+	"github.com/jtbonhomme/ganoi/internal/bases"
 	"github.com/jtbonhomme/ganoi/internal/towers"
 )
 
@@ -32,30 +36,17 @@ func New(n int) *Game {
 
 	game.Level.AddEntity(tl.NewText(2, 2, "HANOI TOWERS", tl.ColorWhite, tl.ColorBlack))
 
-	game.Level.AddEntity(tl.NewText(15, 6, "a", tl.ColorWhite, tl.ColorBlack))
-	game.Level.AddEntity(tl.NewText(45, 6, "b", tl.ColorWhite, tl.ColorBlack))
-	game.Level.AddEntity(tl.NewText(75, 6, "c", tl.ColorWhite, tl.ColorBlack))
+	for i := 0; i < 3; i++ {
+		game.Level.AddEntity(tl.NewText(15+(towers.TowerWidth*i), 6, fmt.Sprintf("%d", i), tl.ColorWhite, tl.ColorBlack))
+		tower := tl.NewRectangle(15+(towers.TowerWidth*i), 8, 1, 6, tl.ColorWhite)
+		game.Level.AddEntity(tower)
+	}
 
-	tower1 := tl.NewRectangle(15, 8, 1, 6, tl.ColorWhite)
-	tower2 := tl.NewRectangle(45, 8, 1, 6, tl.ColorWhite)
-	tower3 := tl.NewRectangle(75, 8, 1, 6, tl.ColorWhite)
-
-	game.Level.AddEntity(tower1)
-	game.Level.AddEntity(tower2)
-	game.Level.AddEntity(tower3)
-
-	base4 := tl.NewRectangle((15 - (3*4 + 1)), (9 + 4), (2*4+1)*3, 1, tl.ColorYellow)
-	base3 := tl.NewRectangle((15 - (3*3 + 1)), (9 + 3), (2*3+1)*3, 1, tl.ColorBlue)
-	base2 := tl.NewRectangle((15 - (3*2 + 1)), (9 + 2), (2*2+1)*3, 1, tl.ColorGreen)
-	base1 := tl.NewRectangle((15 - (3*1 + 1)), (9 + 1), (2*1+1)*3, 1, tl.ColorRed)
-	base0 := tl.NewRectangle((15 - (3*0 + 1)), (9 + 0), (2*0+1)*3, 1, tl.ColorCyan)
-
-	game.Level.AddEntity(base4)
-	game.Level.AddEntity(base3)
-	game.Level.AddEntity(base2)
-	game.Level.AddEntity(base1)
-	game.Level.AddEntity(base0)
-
+	for i := 4; i >= 0; i-- {
+		base := bases.New(i, 0, 4-i)
+		game.Level.AddEntity(base.Rec)
+		game.Towers[0].Bases = append(game.Towers[0].Bases, i)
+	}
 	game.Game.Screen().SetLevel(game.Level)
 
 	return &game
@@ -64,4 +55,13 @@ func New(n int) *Game {
 // Start run the game (this is a blocking call)
 func (g *Game) Start() {
 	g.Game.Start()
+}
+
+// Move moves bases from a tower to another tower
+func (g *Game) Move(from, to int) error {
+	if from < 0 || from > 2 || to < 0 || to > 2 {
+		return errors.New("incorrect parameters")
+	}
+
+	return nil
 }
