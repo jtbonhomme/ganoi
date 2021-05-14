@@ -66,3 +66,6 @@ For a tower mande of `n` disks, to move this tower from position `a` to position
 
 First et last moves can be implemented with the same recursive algorithm.
 
+## Libraries
+
+This program uses the library [termloop](https://github.com/JoelOtter/termloop) to draw the game as a terminal UI.
