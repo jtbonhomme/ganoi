@@ -35,7 +35,7 @@ func New(n int) *Game {
 		Towers: []*towers.Tower{},
 	}
 
-	game.Level.AddEntity(tl.NewText(2, 2, "HANOI TOWERS", tl.ColorWhite, tl.ColorBlack))
+	game.Level.AddEntity(tl.NewText(2, 2, "TOWER OF HANOI", tl.ColorWhite, tl.ColorBlack))
 	game.Level.AddEntity(tl.NewText(2, 17, "Press CTRL+C to exit", tl.ColorWhite, tl.ColorBlack))
 
 	for i := 0; i < RodsNumber; i++ {
