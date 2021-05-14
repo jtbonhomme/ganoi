@@ -1,0 +1,11 @@
+.DS_Store
+ganoi
+ganoi.wasm
+build/ganoi.wasm
+node_modules/
+cover.html
+cover.xml
+coverage.out
+*.prof
+profile*.png
+*.dump
