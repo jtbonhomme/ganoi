@@ -33,6 +33,7 @@ func New(n int) *Game {
 	}
 
 	game.Level.AddEntity(tl.NewText(2, 2, "HANOI TOWERS", tl.ColorWhite, tl.ColorBlack))
+	game.Level.AddEntity(tl.NewText(2, 17, "Press CTRL+C to exit", tl.ColorWhite, tl.ColorBlack))
 
 	for i := 0; i < 3; i++ {
 		game.Level.AddEntity(tl.NewText(15+(towers.TowerWidth*i), 6, fmt.Sprintf("%d", i), tl.ColorWhite, tl.ColorBlack))

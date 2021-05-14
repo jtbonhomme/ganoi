@@ -13,32 +13,19 @@ test: lint ## Go test the repo.
 	go test ./... -cover -coverprofile coverage.out
 
 run: ## Run the main program.
-	go run cmd/ganoi/main.go -config-file ./config.yml
-
-debug: ## Run the main program.
-	go run cmd/ganoi/main.go -config-file ./config.yml -debug -optim
+	go run cmd/ganoi/main.go
 
 pprof: ## Run the main program with profiling.
-	go run cmd/ganoi/main.go -debug -cpuprofile profile.prof
+	go run cmd/ganoi/main.go -cpuprofile profile.prof
 
 clean: ## Build the main program.
 	rm -f ganoi_*.dump
-	rm -f screenshot_*.png
 	rm -f profile*.png
 	rm -f profile.prof
-	rm -f ganoi ganoi.wasm
 	rm -f coverage.out cover.xml cover.html
 
 build: ## Build the main program.
 	go build -o ganoi cmd/ganoi/main.go
-
-wasm: ## Build for Web Assembly distribution.
-	GOOS=js GOARCH=wasm go build -o build/ganoi.wasm cmd/ganoi/main.go
-
-serve: ## Serve Web Assembly build on localhost:8080.
-	which wasmserve || (go install github.com/hajimehoshi/wasmserve@latest)
-	@echo "Open http://localhost:8080"
-	wasmserve cmd/ganoi/main.go
 
 badge: lint ## Generate a coverage badge.
 	which gopherbadger || (go get github.com/jpoles1/gopherbadger)
